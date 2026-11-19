@@ -1,0 +1,16 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Input data (large, distributed with the task archive)
+data/*.png
+data/crops/*.png
+
+# Generated results (route.png is copied to docs/ for the README)
+outputs/*
+!outputs/.gitkeep
