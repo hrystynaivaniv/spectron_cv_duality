@@ -31,8 +31,21 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--frames", required=True, type=Path, help="Directory with drone frames (crop_N.png).")
     p.add_argument("--out", default=Path("outputs"), type=Path, help="Output directory (default: outputs).")
     p.add_argument("--video", action="store_true", help="Also render a fly-over video.")
+    p.add_argument("--no-show", action="store_true", help="Do not open a window with the route at the end.")
     p.add_argument("--no-smooth", action="store_true", help="Disable Savitzky-Golay smoothing.")
     return p.parse_args(argv)
+
+
+def show_route(route: np.ndarray, max_w: int = 1500, max_h: int = 850) -> None:
+    """Show the route image in a window (scaled to fit the screen); any key closes it."""
+    scale = min(max_w / route.shape[1], max_h / route.shape[0], 1.0)
+    view = cv2.resize(route, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+    try:
+        cv2.imshow("Drone route (press any key to close)", view)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    except cv2.error:  # no display (server / CI): the file is still saved
+        print("No display available, route window skipped.")
 
 
 def write_csv(
@@ -118,6 +131,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Time: map features {t_map:.1f} s, localisation {t_loc:.1f} s "
           f"({t_loc / len(poses) * 1000:.0f} ms/frame), total {time.perf_counter() - t_start:.1f} s")
     print(f"Results in: {args.out}")
+    if not args.no_show:
+        show_route(route)
     return 0
 
 

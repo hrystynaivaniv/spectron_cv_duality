@@ -7,7 +7,13 @@ They use the unchanged `drone_nav` code. Results go to `outputs/experiments/`.
 python experiments/synthetic_flights.py   # ~35 s: 15 generated flights with ground truth
 python experiments/stress_test.py         # ~60 s: 3,100 degraded frames, find the breaking point
 python experiments/drop_frames.py         # ~15 s: remove frames from the task data
+python experiments/run_all.py             # ~1 min: full main.py run on every example, one route.png each
 ```
+
+`run_all.py` runs the real CLI on the task data and on the 15 generated flights (5 flights × clean /
+realistic / harsh). Each example gets `outputs/examples/<example>/route.png` plus `trajectory.csv`
+(`--video` adds `flyover.mp4`), and `outputs/examples/summary.csv` lists the error against the
+ground truth. All 16 examples: 50/50 frames localised, centre error at most 0.56 px on the generated flights.
 
 ## 1. Generated flights with ground truth (`synthetic_flights.py`)
 

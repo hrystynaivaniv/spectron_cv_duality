@@ -26,7 +26,7 @@ def test_cli_end_to_end(tmp_path: Path) -> None:
 
     out = tmp_path / "out"
     assert main.main(["--map", str(tmp_path / "map.png"), "--frames", str(frames),
-                      "--out", str(out), "--no-smooth"]) == 0
+                      "--out", str(out), "--no-smooth", "--no-show"]) == 0
 
     rows = list(csv.DictReader((out / "trajectory.csv").open()))
     assert [r["status"] for r in rows] == ["ok", "ok", "ok", "interpolated", "ok", "ok"]

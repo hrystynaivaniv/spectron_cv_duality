@@ -87,7 +87,11 @@ Put the task data into `data/` (see [`data/README.md`](data/README.md)), then:
 python main.py --map data/global_map.png --frames data/crops --out outputs
 python main.py --map data/global_map.png --frames data/crops --out outputs --video   # + flyover.mp4
 python main.py ... --no-smooth                                                       # raw track
+python main.py ... --no-show                                                         # do not open the route window
 ```
+
+At the end of a run the route opens in a window (press any key to close it). If there is no
+display, the window is skipped and the files are still saved.
 
 Outputs:
 
