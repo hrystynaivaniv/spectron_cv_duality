@@ -101,7 +101,7 @@ Tests and reference check:
 
 ```bash
 pytest
-python tools/check_reference.py    # after running main.py on the real data
+python tools/check_reference.py    # only if you have a local reference table (research.md)
 ```
 
 The tests generate a random textured "map", cut out rotated and zoomed frames with known
@@ -110,10 +110,26 @@ cover numeric frame ordering, interpolation, smoothing and an end-to-end CLI run
 
 ## Results
 
-<!-- TODO: fill in after running on the real data (data/ was not available yet):
-     number of localised frames, max deviation from the reference, runtime, and docs/route.png -->
+Run on the task data (3645×1845 map, 50 frames of 640×640):
 
-*Pending: to be filled in after running on the real data.*
+| Metric | Value |
+|---|---|
+| Localised frames | 50 / 50 (none interpolated) |
+| RANSAC inliers per frame | min 104, median 261 (threshold: 20) |
+| Frame→map scale | 0.2534–0.2537 (expected 0.253) |
+| Heading (rotation) | 45.2° … 134.9° |
+| Step between consecutive frames | 63–90 px, median 78 px, no jumps |
+| Time | map features 1.7 s, 29 ms/frame, ~4 s total (CPU) |
+
+The route goes smoothly from START (frame 0, left) to FINISH (frame 49, right), and the
+rotated footprints follow the road.
+
+![Reconstructed route](docs/route.png)
+
+*`docs/route.png` is a 2× downscaled copy of `outputs/route.png`.*
+
+There is no ground-truth table for this data, so accuracy was judged by internal consistency
+(constant scale, uniform steps, overlay on the map), not against reference coordinates.
 
 ## Limitations
 

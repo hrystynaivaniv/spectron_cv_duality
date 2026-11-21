@@ -14,3 +14,6 @@ data/crops/*.png
 # Generated results (route.png is copied to docs/ for the README)
 outputs/*
 !outputs/.gitkeep
+
+# macOS
+.DS_Store
